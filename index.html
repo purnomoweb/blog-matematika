@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathLog - Template Blog Matematika</title>
+    
+    <!-- Google Fonts: Afacad -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            svg: {
+                fontCache: 'global'
+            },
+            startup: {
+                ready: () => {
+                    MathJax.startup.defaultReady();
+                    window.renderMath = () => {
+                        MathJax.typesetPromise();
+                    };
+                }
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Afacad', 'sans-serif'],
+                    },
+                    colors: {
+                        'math-blue': '#1e3a8a',
+                        'math-light': '#eff6ff',
+                        'math-accent': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles */
+        body { font-family: 'Afacad', sans-serif; }
+        
+        /* Typography for Article Content */
+        .article-content p { margin-bottom: 1.5em; line-height: 1.8; color: #334155; }
+        .article-content h3 { font-size: 1.5em; font-weight: 700; color: #1e293b; margin-top: 1.5em; margin-bottom: 0.8em; }
+        .article-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1.5em; }
+        .article-content blockquote { border-left: 4px solid #3b82f6; padding-left: 1em; margin: 1.5em 0; font-style: italic; color: #475569; background: #f8fafc; padding: 1em; border-radius: 0 0.5em 0.5em 0; }
+        
+        /* MathJax Scroll Fix */
+        mjx-container { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+        
+        .active-nav { color: #1e3a8a; font-weight: 700; }
+        
+        /* Animation */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50 border-t-4 border-math-blue">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#" onclick="goHome()" class="flex items-center space-x-2 text-math-blue hover:opacity-80 transition cursor-pointer">
+                    <i class="fa-solid fa-square-root-variable text-2xl"></i>
+                    <span class="text-2xl font-bold tracking-tight">MathLog</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8 font-medium text-slate-600">
+                    <a href="#" onclick="goHome()" class="nav-link hover:text-math-blue transition active-nav" id="nav-home">Beranda</a>
+                    <a href="#" onclick="showPage('materi')" class="nav-link hover:text-math-blue transition" id="nav-materi">Materi</a>
+                    <a href="#" onclick="showPage('about')" class="nav-link hover:text-math-blue transition" id="nav-about">Tentang</a>
+                    <a href="#" onclick="showPage('contact')" class="nav-link hover:text-math-blue transition" id="nav-contact">Hubungi Kami</a>
+                    <button onclick="toggleSearchModal()" class="text-slate-500 hover:text-math-accent transition">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-600 focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100">
+            <div class="px-4 py-3 space-y-2">
+                <a href="#" onclick="goHome(); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Beranda</a>
+                <a href="#" onclick="showPage('materi'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Materi</a>
+                <a href="#" onclick="showPage('about'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Tentang</a>
+                <a href="#" onclick="showPage('contact'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Hubungi Kami</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- MAIN CONTENT COLUMN -->
+            <main class="lg:col-span-8 min-h-[500px]">
+                
+                <!-- === PAGE: HOME (List of Articles) === -->
+                <div id="page-home" class="space-y-8 fade-in">
+                    <!-- Banner -->
+                    <div class="bg-gradient-to-r from-math-blue to-blue-600 text-white p-6 rounded-lg shadow-lg">
+                        <h1 class="text-3xl font-bold mb-2">MathLog</h1>
+                        <p class="text-blue-100 text-lg">Blog Matematika dengan tampilan bersih dan responsif.</p>
+                    </div>
+
+                    <!-- Container untuk Daftar Artikel -->
+                    <div id="article-list-container" class="space-y-8">
+                        <!-- Artikel akan muncul di sini -->
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex justify-center space-x-2 pt-4 opacity-50 cursor-not-allowed">
+                        <button class="px-3 py-1 border rounded bg-slate-100 text-slate-400" disabled>Prev</button>
+                        <button class="px-3 py-1 border rounded bg-math-blue text-white">1</button>
+                        <button class="px-3 py-1 border rounded bg-slate-100 text-slate-400" disabled>Next</button>
+                    </div>
+                </div>
+
+                <!-- === PAGE: MATERI (Topic Index) === -->
+                <div id="page-materi" class="hidden fade-in space-y-6">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                        <h1 class="text-3xl font-bold text-slate-800 mb-2">Indeks Materi</h1>
+                        <p class="text-slate-500 mb-6 border-b border-slate-100 pb-4">Kumpulan materi matematika yang dikelompokkan berdasarkan topik.</p>
+                        
+                        <!-- Container untuk Daftar Materi per Kategori -->
+                        <div id="materi-index-container" class="space-y-8">
+                            <!-- Diisi otomatis oleh JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- === PAGE: SINGLE ARTICLE === -->
+                <div id="page-article" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-10">
+                    <!-- Breadcrumb -->
+                    <div class="text-sm text-slate-500 mb-6">
+                        <span class="hover:text-math-blue cursor-pointer" onclick="goHome()">Beranda</span> 
+                        <i class="fa-solid fa-chevron-right text-xs mx-2"></i> 
+                        <span id="detail-category-crumb" class="text-slate-500">Kategori</span>
+                    </div>
+
+                    <!-- Article Header -->
+                    <h1 id="detail-title" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Judul Artikel</h1>
+                    <div class="flex items-center text-sm text-slate-500 mb-8 pb-8 border-b border-slate-100 space-x-4">
+                        <span id="detail-category-badge" class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs font-semibold">Kategori</span>
+                        <span><i class="fa-regular fa-calendar mr-1"></i> <span id="detail-date">Tanggal</span></span>
+                        <span><i class="fa-regular fa-user mr-1"></i> Admin</span>
+                    </div>
+
+                    <!-- Article Body -->
+                    <div id="detail-content" class="article-content text-slate-700">
+                        <!-- Isi artikel -->
+                    </div>
+                    
+                    <!-- Share Footer -->
+                    <div class="mt-10 pt-6 border-t border-slate-100 flex justify-between items-center">
+                        <div class="text-sm">
+                            <span class="font-bold text-slate-700 mr-2">Bagikan:</span>
+                        </div>
+                        <div class="flex space-x-3 text-slate-400">
+                            <i class="fa-brands fa-facebook hover:text-blue-600 cursor-pointer text-lg"></i>
+                            <i class="fa-brands fa-whatsapp hover:text-green-500 cursor-pointer text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- === PAGE: ABOUT === -->
+                <div id="page-about" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+                    <div class="w-32 h-32 bg-slate-200 rounded-full mx-auto mb-6 flex items-center justify-center text-5xl text-slate-400">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-slate-800 mb-2">Tentang Kami</h1>
+                    <p class="text-slate-500 mb-6">MathLog Admin</p>
+                    <div class="prose max-w-none text-slate-600 mx-auto text-left">
+                        <p>
+                            MathLog adalah template blog matematika sederhana yang dibuat untuk memudahkan penulisan rumus matematika menggunakan LaTeX (MathJax).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- === PAGE: CONTACT (New) === -->
+                <div id="page-contact" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6 border-l-4 border-math-blue pl-4">Hubungi Kami</h1>
+                    <p class="text-slate-600 mb-6">Jika Anda memiliki pertanyaan seputar materi matematika, kritik, atau saran, silakan hubungi kami melalui formulir di bawah ini.</p>
+                    
+                    <form onsubmit="event.preventDefault(); alert('Pesan Anda telah terkirim (Simulasi)!');" class="space-y-4">
+                        <div>
+                            <label class="block text-slate-700 font-medium mb-1">Nama Lengkap</label>
+                            <input type="text" class="w-full border border-slate-300 rounded px-4 py-2 focus:outline-none focus:border-math-blue" required>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-medium mb-1">Email</label>
+                            <input type="email" class="w-full border border-slate-300 rounded px-4 py-2 focus:outline-none focus:border-math-blue" required>
+                        </div>
+                        <div>
+                            <label class="block text-slate-700 font-medium mb-1">Pesan</label>
+                            <textarea rows="5" class="w-full border border-slate-300 rounded px-4 py-2 focus:outline-none focus:border-math-blue" required></textarea>
+                        </div>
+                        <button type="submit" class="bg-math-blue text-white px-6 py-2 rounded font-semibold hover:bg-blue-800 transition">Kirim Pesan</button>
+                    </form>
+                </div>
+
+                <!-- === PAGE: PRIVACY POLICY (New) === -->
+                <div id="page-privacy" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6 border-l-4 border-math-blue pl-4">Kebijakan Privasi</h1>
+                    <div class="prose max-w-none text-slate-600 space-y-4">
+                        <p>Terakhir diperbarui: 25 Mei 2025</p>
+                        <p>MathLog ("kami") mengoperasikan situs web blog matematika ini. Halaman ini memberi tahu Anda tentang kebijakan kami mengenai pengumpulan, penggunaan, dan pengungkapan Informasi Pribadi saat Anda menggunakan Layanan kami.</p>
+                        <h3 class="text-xl font-bold text-slate-800">Log Data</h3>
+                        <p>Seperti banyak operator situs, kami mengumpulkan informasi yang dikirimkan browser Anda setiap kali Anda mengunjungi Situs kami ("Log Data"). Data Log ini dapat mencakup informasi seperti alamat Protokol Internet ("IP") komputer Anda, jenis browser, versi browser, halaman Situs kami yang Anda kunjungi, waktu dan tanggal kunjungan Anda, waktu yang dihabiskan di halaman-halaman tersebut dan statistik lainnya.</p>
+                        <h3 class="text-xl font-bold text-slate-800">Cookies</h3>
+                        <p>Cookies adalah file dengan sedikit data, yang mungkin menyertakan pengidentifikasi unik anonim. Cookies dikirim ke browser Anda dari situs web dan disimpan di hard drive komputer Anda. Kami menggunakan "cookies" untuk mengumpulkan informasi guna meningkatkan layanan kami.</p>
+                    </div>
+                </div>
+
+                <!-- === PAGE: DISCLAIMER (New) === -->
+                <div id="page-disclaimer" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6 border-l-4 border-math-blue pl-4">Disclaimer</h1>
+                    <div class="prose max-w-none text-slate-600 space-y-4">
+                        <p>Semua informasi di situs web ini diterbitkan dengan itikad baik dan hanya untuk tujuan informasi umum dan edukasi matematika.</p>
+                        <p>MathLog tidak memberikan jaminan apa pun tentang kelengkapan, keandalan, dan keakuratan informasi ini. Segala tindakan yang Anda lakukan atas informasi yang Anda temukan di situs web ini (MathLog), sepenuhnya merupakan risiko Anda sendiri. MathLog tidak akan bertanggung jawab atas kerugian dan/atau kerusakan sehubungan dengan penggunaan situs web kami.</p>
+                        <p>Pastikan untuk selalu memverifikasi rumus dan perhitungan penting dengan referensi buku teks standar.</p>
+                    </div>
+                </div>
+
+                <!-- === PAGE: TERMS (New) === -->
+                <div id="page-terms" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-6 border-l-4 border-math-blue pl-4">Syarat dan Ketentuan</h1>
+                    <div class="prose max-w-none text-slate-600 space-y-4">
+                        <p>Dengan mengakses situs web ini, Anda setuju untuk terikat oleh Syarat dan Ketentuan Penggunaan situs web ini, semua hukum dan peraturan yang berlaku.</p>
+                        <h3 class="text-xl font-bold text-slate-800">Lisensi Penggunaan</h3>
+                        <p>Izin diberikan untuk mengunduh sementara satu salinan materi (informasi atau perangkat lunak) di situs web MathLog untuk tampilan transisi pribadi dan non-komersial saja.</p>
+                        <p>Dilarang keras menyalin materi artikel secara penuh untuk dipublikasikan ulang di situs lain tanpa menyertakan sumber asli (MathLog).</p>
+                    </div>
+                </div>
+
+            </main>
+
+            <!-- SIDEBAR (Fixed Column) -->
+            <aside class="lg:col-span-4 space-y-8">
+                <!-- Search Widget -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-4 border-l-4 border-math-blue pl-3">Cari</h3>
+                    <div class="relative">
+                        <input type="text" placeholder="Cari materi..." class="w-full pl-4 pr-10 py-2 border border-slate-300 rounded focus:outline-none focus:border-math-blue">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-slate-400"></i>
+                    </div>
+                </div>
+
+                <!-- Categories Widget (Dynamic) -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-4 border-l-4 border-math-blue pl-3">Kategori</h3>
+                    <ul id="sidebar-categories" class="space-y-2 text-sm text-slate-600">
+                        <!-- Kategori diisi oleh JS -->
+                    </ul>
+                </div>
+                
+                <!-- Recent Posts Widget (Dynamic) -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-slate-800 mb-4 border-l-4 border-math-blue pl-3">Terbaru</h3>
+                    <div id="sidebar-recent" class="space-y-4">
+                        <!-- Post terbaru diisi oleh JS -->
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Footer Updated -->
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t-4 border-math-accent mt-auto">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center space-x-2 text-white mb-4">
+                        <i class="fa-solid fa-square-root-variable text-xl"></i>
+                        <span class="text-xl font-bold">MathLog</span>
+                    </div>
+                    <p class="text-sm">Belajar matematika jadi lebih mudah, interaktif, dan menyenangkan.</p>
+                </div>
+                
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Menu Utama</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" onclick="goHome()" class="hover:text-white transition">Beranda</a></li>
+                        <li><a href="#" onclick="showPage('materi')" class="hover:text-white transition">Materi</a></li>
+                        <li><a href="#" onclick="showPage('about')" class="hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="#" onclick="showPage('contact')" class="hover:text-white transition">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Legal & Bantuan</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" onclick="showPage('privacy')" class="hover:text-white transition">Kebijakan Privasi</a></li>
+                        <li><a href="#" onclick="showPage('disclaimer')" class="hover:text-white transition">Disclaimer</a></li>
+                        <li><a href="#" onclick="showPage('terms')" class="hover:text-white transition">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 text-center text-sm">
+                <p>&copy; 2025 MathLog. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- === SEARCH MODAL (New Feature) === -->
+    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden flex items-start justify-center pt-20 fade-in" onclick="if(event.target === this) toggleSearchModal()">
+        <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-slate-800">Pencarian</h3>
+                <button onclick="toggleSearchModal()" class="text-slate-400 hover:text-red-500 transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <input type="text" id="search-input" placeholder="Ketik topik (misal: Limit, Matriks, Lingkaran)..." class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-math-blue text-lg mb-6" onkeyup="performSearch()">
+            
+            <div id="search-results" class="max-h-[60vh] overflow-y-auto space-y-4">
+                <p class="text-slate-500 text-center py-4">Mulai mengetik untuk mencari...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATA & LOGIC SCRIPT -->
+    <script>
+        // ==========================================
+        // DATA ARTIKEL (EDIT DI SINI)
+        // ==========================================
+        
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Konsep Dasar Limit Fungsi Aljabar",
+                date: "24 Mei 2025",
+                category: "Kalkulus",
+                summary: "Limit menjelaskan perilaku fungsi saat mendekati nilai tertentu.",
+                content: `
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                    <h3>Definisi Limit</h3>
+                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Berikut adalah notasi limit secara umum:</p>
+                    <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-math-blue my-6 overflow-x-auto">
+                        $$ \lim_{x \to c} f(x) = L $$
+                    </div>
+                    <p>Artinya, jika $x$ mendekati $c$, maka $f(x)$ mendekati $L$. Excepteur sint occaecat cupidatat non proident.</p>
+                `
+            },
+            {
+                id: 2,
+                title: "Determinan Matriks Ordo 2x2",
+                date: "22 Mei 2025",
+                category: "Aljabar",
+                summary: "Memahami cara menghitung determinan matriks dengan cepat dan mudah.",
+                content: `
+                    <p>Matriks adalah susunan bilangan dalam baris dan kolom.</p>
+                    <h3>Rumus Determinan</h3>
+                    <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-math-blue my-6 overflow-x-auto">
+                        $$ A = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} $$
+                    </div>
+                    <p>Maka determinan dari matriks $A$ adalah:</p>
+                    <p>$$ \\det(A) = ad - bc $$</p>
+                `
+            },
+            {
+                id: 3,
+                title: "Rumus Luas Lingkaran",
+                date: "20 Mei 2025",
+                category: "Geometri",
+                summary: "Penjelasan singkat mengenai luas lingkaran dan hubungannya dengan jari-jari.",
+                content: `
+                    <p>Lingkaran adalah himpunan titik yang berjarak sama dari satu titik pusat.</p>
+                    <h3>Rumus Dasar</h3>
+                    <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-math-blue my-6 overflow-x-auto">
+                        $$ L = \\pi r^2 $$
+                    </div>
+                    <p>Di mana nilai $\\pi \\approx 3.14$ atau $\\frac{22}{7}$.</p>
+                `
+            }
+        ];
+
+        // ==========================================
+        // LOGIC APLIKASI
+        // ==========================================
+
+        function init() {
+            renderHomeList();
+            renderSidebar();
+            renderMateriPage(); // Render halaman materi
+        }
+
+        // --- SEARCH LOGIC (New) ---
+        function toggleSearchModal() {
+            const modal = document.getElementById('search-modal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                document.getElementById('search-input').value = '';
+                document.getElementById('search-results').innerHTML = '<p class="text-slate-500 text-center py-4">Mulai mengetik untuk mencari...</p>';
+                setTimeout(() => document.getElementById('search-input').focus(), 100);
+            }
+        }
+
+        function performSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const container = document.getElementById('search-results');
+            
+            if (query.length < 2) {
+                container.innerHTML = '<p class="text-slate-500 text-center py-4">Ketik minimal 2 karakter...</p>';
+                return;
+            }
+
+            const results = blogPosts.filter(post => 
+                post.title.toLowerCase().includes(query) || 
+                post.summary.toLowerCase().includes(query) ||
+                post.category.toLowerCase().includes(query)
+            );
+
+            if (results.length === 0) {
+                container.innerHTML = '<p class="text-slate-500 text-center py-4">Tidak ditemukan hasil.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            results.forEach(post => {
+                container.innerHTML += `
+                    <div class="p-4 border border-slate-100 rounded hover:bg-slate-50 cursor-pointer transition" onclick="openArticle(${post.id}); toggleSearchModal()">
+                        <div class="flex justify-between items-start">
+                            <h4 class="font-bold text-math-blue">${post.title}</h4>
+                            <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-500">${post.category}</span>
+                        </div>
+                        <p class="text-sm text-slate-600 mt-1 line-clamp-2">${post.summary}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Render Daftar Artikel di Halaman Depan
+        function renderHomeList() {
+            const container = document.getElementById('article-list-container');
+            container.innerHTML = '';
+
+            blogPosts.forEach(post => {
+                const card = `
+                    <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition cursor-pointer" onclick="openArticle(${post.id})">
+                        <div class="p-6 md:p-8">
+                            <div class="flex items-center text-sm text-slate-500 mb-3 space-x-3">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs font-semibold">${post.category}</span>
+                                <span><i class="fa-regular fa-calendar mr-1"></i> ${post.date}</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-3 hover:text-math-blue transition">
+                                ${post.title}
+                            </h2>
+                            <p class="text-slate-600 mb-4">
+                                ${post.summary}
+                            </p>
+                            <span class="text-math-blue font-semibold hover:underline">Baca Selengkapnya <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                        </div>
+                    </article>
+                `;
+                container.innerHTML += card;
+            });
+            
+            if(window.MathJax && window.renderMath) window.renderMath();
+        }
+
+        // Render Halaman Materi (Grouping by Category)
+        function renderMateriPage() {
+            const container = document.getElementById('materi-index-container');
+            container.innerHTML = '';
+
+            // Grouping logic
+            const grouped = {};
+            blogPosts.forEach(post => {
+                if (!grouped[post.category]) {
+                    grouped[post.category] = [];
+                }
+                grouped[post.category].push(post);
+            });
+
+            // Generate HTML per category
+            for (const [category, posts] of Object.entries(grouped)) {
+                let postsHtml = '';
+                posts.forEach(post => {
+                    postsHtml += `
+                        <li class="flex items-start space-x-3 group cursor-pointer" onclick="openArticle(${post.id})">
+                            <i class="fa-solid fa-chevron-right text-math-accent mt-1.5 text-xs group-hover:translate-x-1 transition"></i>
+                            <div>
+                                <h4 class="font-medium text-slate-700 group-hover:text-math-blue transition">${post.title}</h4>
+                                <span class="text-xs text-slate-400">${post.date}</span>
+                            </div>
+                        </li>
+                    `;
+                });
+
+                const categorySection = `
+                    <div class="mb-8 last:mb-0">
+                        <h3 class="text-xl font-bold text-math-blue mb-4 flex items-center">
+                            <i class="fa-solid fa-folder-open mr-2 opacity-70"></i> ${category}
+                        </h3>
+                        <ul class="space-y-3 bg-slate-50 p-5 rounded-lg border border-slate-100">
+                            ${postsHtml}
+                        </ul>
+                    </div>
+                `;
+                container.innerHTML += categorySection;
+            }
+        }
+
+        // Render Sidebar
+        function renderSidebar() {
+            const categoryCounts = {};
+            blogPosts.forEach(post => {
+                categoryCounts[post.category] = (categoryCounts[post.category] || 0) + 1;
+            });
+
+            const catContainer = document.getElementById('sidebar-categories');
+            catContainer.innerHTML = '';
+            
+            for (const [cat, count] of Object.entries(categoryCounts)) {
+                catContainer.innerHTML += `
+                    <li class="flex justify-between hover:text-math-blue cursor-pointer transition" onclick="showPage('materi')">
+                        <span>${cat}</span> <span class="bg-slate-100 px-2 rounded-full text-xs py-0.5 text-slate-500">${count}</span>
+                    </li>
+                `;
+            }
+
+            const recentContainer = document.getElementById('sidebar-recent');
+            recentContainer.innerHTML = '';
+            
+            blogPosts.slice(0, 3).forEach(post => {
+                recentContainer.innerHTML += `
+                    <div class="cursor-pointer group" onclick="openArticle(${post.id})">
+                        <h4 class="text-sm font-semibold text-slate-700 group-hover:text-math-blue transition">${post.title}</h4>
+                        <span class="text-xs text-slate-400">${post.date}</span>
+                    </div>
+                    <hr class="border-slate-100 last:hidden">
+                `;
+            });
+        }
+
+        function openArticle(id) {
+            const post = blogPosts.find(p => p.id === id);
+            if (!post) return;
+
+            document.getElementById('detail-title').innerText = post.title;
+            document.getElementById('detail-date').innerText = post.date;
+            document.getElementById('detail-category-badge').innerText = post.category;
+            document.getElementById('detail-category-crumb').innerText = post.category;
+            document.getElementById('detail-content').innerHTML = post.content;
+
+            showPage('article');
+            if(window.MathJax && window.renderMath) window.renderMath();
+        }
+
+        function showPage(pageId) {
+            // Sembunyikan semua page
+            const pages = ['home', 'materi', 'article', 'about', 'contact', 'privacy', 'disclaimer', 'terms'];
+            pages.forEach(id => {
+                const el = document.getElementById('page-' + id);
+                if(el) el.classList.add('hidden');
+            });
+
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
+
+            const targetPage = document.getElementById('page-' + pageId);
+            if(targetPage) targetPage.classList.remove('hidden');
+
+            if(pageId === 'about') {
+                document.getElementById('nav-about').classList.add('active-nav');
+            } else if (pageId === 'home') {
+                document.getElementById('nav-home').classList.add('active-nav');
+            } else if (pageId === 'materi') {
+                document.getElementById('nav-materi').classList.add('active-nav');
+            } else if (pageId === 'contact') {
+                document.getElementById('nav-contact').classList.add('active-nav');
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        function goHome() {
+            showPage('home');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+
+    </script>
+</body>
+</html>
+          
