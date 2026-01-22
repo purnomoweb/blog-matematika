@@ -87,17 +87,17 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <a href="#" onclick="goHome()" class="flex items-center space-x-2 text-math-blue hover:opacity-80 transition cursor-pointer">
+                <a href="https://mathlora.netlify.app" onclick="goHome()" class="flex items-center space-x-2 text-math-blue hover:opacity-80 transition cursor-pointer">
                     <i class="fa-solid fa-square-root-variable text-2xl"></i>
                     <span class="text-2xl font-bold tracking-tight">Mathlora</span>
                 </a>
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8 font-medium text-slate-600">
-                    <a href="#" onclick="goHome()" class="nav-link hover:text-math-blue transition active-nav" id="nav-home">Beranda</a>
-                    <a href="#" onclick="showPage('materi')" class="nav-link hover:text-math-blue transition" id="nav-materi">Materi</a>
-                    <a href="#" onclick="showPage('about')" class="nav-link hover:text-math-blue transition" id="nav-about">Tentang</a>
-                    <a href="#" onclick="showPage('contact')" class="nav-link hover:text-math-blue transition" id="nav-contact">Hubungi Kami</a>
+                    <a href="#home" onclick="goHome()" class="nav-link hover:text-math-blue transition active-nav" id="nav-home">Beranda</a>
+                    <a href="#materi" onclick="showPage('materi')" class="nav-link hover:text-math-blue transition" id="nav-materi">Materi</a>
+                    <a href="#about" onclick="showPage('about')" class="nav-link hover:text-math-blue transition" id="nav-profil">Profil Admin</a>
+                    <a href="#contact" onclick="showPage('contact')" class="nav-link hover:text-math-blue transition" id="nav-contact">Hubungi Kami</a>
                     <button onclick="toggleSearchModal()" class="text-slate-500 hover:text-math-accent transition">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -113,10 +113,10 @@
         <!-- Mobile Menu Panel -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100">
             <div class="px-4 py-3 space-y-2">
-                <a href="#" onclick="goHome(); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Beranda</a>
-                <a href="#" onclick="showPage('materi'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Materi</a>
-                <a href="#" onclick="showPage('about'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Tentang</a>
-                <a href="#" onclick="showPage('contact'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Hubungi Kami</a>
+                <a href="#home" onclick="goHome(); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Beranda</a>
+                <a href="#materi" onclick="showPage('materi'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Materi</a>
+                <a href="#about" onclick="showPage('about'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Profil Admin</a>
+                <a href="#contact" onclick="showPage('contact'); toggleMobileMenu()" class="block py-2 text-slate-700 hover:bg-math-light hover:text-math-blue rounded px-2">Hubungi Kami</a>
             </div>
         </div>
     </nav>
@@ -233,7 +233,7 @@
                 </div>
 
                 <!-- === PAGE: PRIVACY POLICY (New) === -->
-                <div id="page-privacy" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                <div id="page-kebijakan" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8">
                     <h1 class="text-3xl font-bold text-slate-800 mb-6 border-l-4 border-math-blue pl-4">Kebijakan Privasi</h1>
                     <div class="prose max-w-none text-slate-600 space-y-4">
                         <p>Terakhir diperbarui: 25 Mei 2025</p>
@@ -256,7 +256,7 @@
                 </div>
 
                 <!-- === PAGE: TERMS (New) === -->
-                <div id="page-terms" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+                <div id="page-syarat" class="hidden fade-in bg-white rounded-xl shadow-sm border border-slate-200 p-8">
                     <h1 class="text-3xl font-bold text-slate-800 mb-6 border-l-4 border-math-blue pl-4">Syarat dan Ketentuan</h1>
                     <div class="prose max-w-none text-slate-600 space-y-4">
                         <p>Dengan mengakses situs web ini, Anda setuju untuk terikat oleh Syarat dan Ketentuan Penggunaan situs web ini, semua hukum dan peraturan yang berlaku.</p>
@@ -316,10 +316,10 @@
                 <div>
                     <h4 class="text-white font-bold mb-4">Menu Utama</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" onclick="goHome()" class="hover:text-white transition">Beranda</a></li>
-                        <li><a href="#" onclick="showPage('materi')" class="hover:text-white transition">Materi</a></li>
-                        <li><a href="#" onclick="showPage('about')" class="hover:text-white transition">Tentang Kami</a></li>
-                        <li><a href="#" onclick="showPage('contact')" class="hover:text-white transition">Hubungi Kami</a></li>
+                        <li><a href="#home" onclick="goHome()" class="hover:text-white transition">Beranda</a></li>
+                        <li><a href="#materi" onclick="showPage('materi')" class="hover:text-white transition">Materi</a></li>
+                        <li><a href="#about" onclick="showPage('about')" class="hover:text-white transition">Profil Admin</a></li>
+                        <li><a href="#contact" onclick="showPage('contact')" class="hover:text-white transition">Hubungi Kami</a></li>
                     </ul>
                 </div>
 
@@ -327,9 +327,9 @@
                 <div>
                     <h4 class="text-white font-bold mb-4">Legal & Bantuan</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" onclick="showPage('privacy')" class="hover:text-white transition">Kebijakan Privasi</a></li>
-                        <li><a href="#" onclick="showPage('disclaimer')" class="hover:text-white transition">Disclaimer</a></li>
-                        <li><a href="#" onclick="showPage('terms')" class="hover:text-white transition">Syarat & Ketentuan</a></li>
+                        <li><a href="#kebijakan" onclick="showPage('kebijakan')" class="hover:text-white transition">Kebijakan Privasi</a></li>
+                        <li><a href="#disclaimer" onclick="showPage('disclaimer')" class="hover:text-white transition">Disclaimer</a></li>
+                        <li><a href="#syarat" onclick="showPage('syarat')" class="hover:text-white transition">Syarat & Ketentuan</a></li>
                     </ul>
                 </div>
             </div>
@@ -357,9 +357,9 @@
     </div>
 
     <!-- DATA & LOGIC SCRIPT -->
-    <script>
+   <script>
         // ==========================================
-        // DATA ARTIKEL (EDIT DI SINI)
+        // DATA ARTIKEL
         // ==========================================
         
         const blogPosts = [
@@ -411,18 +411,40 @@
                 `
             }
         ];
-
+    
         // ==========================================
         // LOGIC APLIKASI
         // ==========================================
-
+    
+        // --- [MODIFIKASI] Logic Init Utama ---
         function init() {
             renderHomeList();
             renderSidebar();
-            renderMateriPage(); // Render halaman materi
+            renderMateriPage(); 
+    
+            // CEK URL SAAT REFRESH
+            const hash = window.location.hash; // Mengambil string seperti "#materi" atau "#article-1"
+    
+            if (hash) {
+                // Hapus tanda '#' di depan
+                const cleanHash = hash.substring(1);
+    
+                // Cek apakah ini URL untuk artikel? (Format: #article-ID)
+                if (cleanHash.startsWith('article-')) {
+                    const articleId = parseInt(cleanHash.split('-')[1]);
+                    openArticle(articleId); 
+                } 
+                // Jika bukan artikel, berarti halaman biasa (home, materi, about, dll)
+                else {
+                    showPage(cleanHash);
+                }
+            } else {
+                // Jika tidak ada hash sama sekali, buka Home
+                showPage('home');
+            }
         }
-
-        // --- SEARCH LOGIC (New) ---
+    
+        // --- SEARCH LOGIC ---
         function toggleSearchModal() {
             const modal = document.getElementById('search-modal');
             modal.classList.toggle('hidden');
@@ -432,7 +454,7 @@
                 setTimeout(() => document.getElementById('search-input').focus(), 100);
             }
         }
-
+    
         function performSearch() {
             const query = document.getElementById('search-input').value.toLowerCase();
             const container = document.getElementById('search-results');
@@ -441,18 +463,18 @@
                 container.innerHTML = '<p class="text-slate-500 text-center py-4">Ketik minimal 2 karakter...</p>';
                 return;
             }
-
+    
             const results = blogPosts.filter(post => 
                 post.title.toLowerCase().includes(query) || 
                 post.summary.toLowerCase().includes(query) ||
                 post.category.toLowerCase().includes(query)
             );
-
+    
             if (results.length === 0) {
                 container.innerHTML = '<p class="text-slate-500 text-center py-4">Tidak ditemukan hasil.</p>';
                 return;
             }
-
+    
             container.innerHTML = '';
             results.forEach(post => {
                 container.innerHTML += `
@@ -466,12 +488,13 @@
                 `;
             });
         }
-
+    
         // Render Daftar Artikel di Halaman Depan
         function renderHomeList() {
             const container = document.getElementById('article-list-container');
+            if(!container) return; // Error prevention
             container.innerHTML = '';
-
+    
             blogPosts.forEach(post => {
                 const card = `
                     <article class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition cursor-pointer" onclick="openArticle(${post.id})">
@@ -495,13 +518,13 @@
             
             if(window.MathJax && window.renderMath) window.renderMath();
         }
-
-        // Render Halaman Materi (Grouping by Category)
+    
+        // Render Halaman Materi
         function renderMateriPage() {
             const container = document.getElementById('materi-index-container');
+            if(!container) return;
             container.innerHTML = '';
-
-            // Grouping logic
+    
             const grouped = {};
             blogPosts.forEach(post => {
                 if (!grouped[post.category]) {
@@ -509,8 +532,7 @@
                 }
                 grouped[post.category].push(post);
             });
-
-            // Generate HTML per category
+    
             for (const [category, posts] of Object.entries(grouped)) {
                 let postsHtml = '';
                 posts.forEach(post => {
@@ -524,7 +546,7 @@
                         </li>
                     `;
                 });
-
+    
                 const categorySection = `
                     <div class="mb-8 last:mb-0">
                         <h3 class="text-xl font-bold text-math-blue mb-4 flex items-center">
@@ -538,89 +560,116 @@
                 container.innerHTML += categorySection;
             }
         }
-
+    
         // Render Sidebar
         function renderSidebar() {
             const categoryCounts = {};
             blogPosts.forEach(post => {
                 categoryCounts[post.category] = (categoryCounts[post.category] || 0) + 1;
             });
-
+    
             const catContainer = document.getElementById('sidebar-categories');
-            catContainer.innerHTML = '';
-            
-            for (const [cat, count] of Object.entries(categoryCounts)) {
-                catContainer.innerHTML += `
-                    <li class="flex justify-between hover:text-math-blue cursor-pointer transition" onclick="showPage('materi')">
-                        <span>${cat}</span> <span class="bg-slate-100 px-2 rounded-full text-xs py-0.5 text-slate-500">${count}</span>
-                    </li>
-                `;
+            if(catContainer) {
+                catContainer.innerHTML = '';
+                for (const [cat, count] of Object.entries(categoryCounts)) {
+                    catContainer.innerHTML += `
+                        <li class="flex justify-between hover:text-math-blue cursor-pointer transition" onclick="showPage('materi')">
+                            <span>${cat}</span> <span class="bg-slate-100 px-2 rounded-full text-xs py-0.5 text-slate-500">${count}</span>
+                        </li>
+                    `;
+                }
             }
-
+    
             const recentContainer = document.getElementById('sidebar-recent');
-            recentContainer.innerHTML = '';
-            
-            blogPosts.slice(0, 3).forEach(post => {
-                recentContainer.innerHTML += `
-                    <div class="cursor-pointer group" onclick="openArticle(${post.id})">
-                        <h4 class="text-sm font-semibold text-slate-700 group-hover:text-math-blue transition">${post.title}</h4>
-                        <span class="text-xs text-slate-400">${post.date}</span>
-                    </div>
-                    <hr class="border-slate-100 last:hidden">
-                `;
-            });
+            if(recentContainer) {
+                recentContainer.innerHTML = '';
+                blogPosts.slice(0, 3).forEach(post => {
+                    recentContainer.innerHTML += `
+                        <div class="cursor-pointer group" onclick="openArticle(${post.id})">
+                            <h4 class="text-sm font-semibold text-slate-700 group-hover:text-math-blue transition">${post.title}</h4>
+                            <span class="text-xs text-slate-400">${post.date}</span>
+                        </div>
+                        <hr class="border-slate-100 last:hidden">
+                    `;
+                });
+            }
         }
-
+    
+        // --- [MODIFIKASI] Logic Buka Artikel ---
         function openArticle(id) {
             const post = blogPosts.find(p => p.id === id);
-            if (!post) return;
-
+            if (!post) {
+                showPage('home'); // Jika artikel tidak ketemu, balik ke home
+                return;
+            }
+    
+            // Set konten ke element HTML
             document.getElementById('detail-title').innerText = post.title;
             document.getElementById('detail-date').innerText = post.date;
             document.getElementById('detail-category-badge').innerText = post.category;
             document.getElementById('detail-category-crumb').innerText = post.category;
             document.getElementById('detail-content').innerHTML = post.content;
-
+    
             showPage('article');
+            
+            // PENTING: Update URL Hash supaya kalau direfresh tetap di artikel ini
+            // Contoh URL jadi: website.com/#article-1
+            window.location.hash = 'article-' + id;
+    
             if(window.MathJax && window.renderMath) window.renderMath();
         }
-
+    
+        // --- [MODIFIKASI] Show Page dengan Error Handling ---
         function showPage(pageId) {
+            // Cek dulu apakah element halaman tujuan ADA?
+            const targetPage = document.getElementById('page-' + pageId);
+            
+            // Jika halaman tidak ditemukan (misal user ketik URL ngawur), paksa ke home
+            if(!targetPage) {
+                console.warn("Halaman tidak ditemukan:", pageId);
+                if(pageId !== 'home') showPage('home'); 
+                return;
+            }
+    
             // Sembunyikan semua page
-            const pages = ['home', 'materi', 'article', 'about', 'contact', 'privacy', 'disclaimer', 'terms'];
+            const pages = ['home', 'materi', 'article', 'about', 'contact', 'kebijakan', 'disclaimer', 'syarat'];
             pages.forEach(id => {
                 const el = document.getElementById('page-' + id);
                 if(el) el.classList.add('hidden');
             });
-
+    
+            // Tampilkan halaman tujuan
+            targetPage.classList.remove('hidden');
+    
+            // Reset semua nav link active state
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-nav'));
-
-            const targetPage = document.getElementById('page-' + pageId);
-            if(targetPage) targetPage.classList.remove('hidden');
-
-            if(pageId === 'about') {
-                document.getElementById('nav-about').classList.add('active-nav');
-            } else if (pageId === 'home') {
-                document.getElementById('nav-home').classList.add('active-nav');
+    
+            // Set active state untuk nav yang sesuai
+            if (pageId === 'home') {
+                document.getElementById('nav-home')?.classList.add('active-nav');
             } else if (pageId === 'materi') {
-                document.getElementById('nav-materi').classList.add('active-nav');
+                document.getElementById('nav-materi')?.classList.add('active-nav');
+            } else if (pageId === 'about') {
+                document.getElementById('nav-profil')?.classList.add('active-nav');
             } else if (pageId === 'contact') {
-                document.getElementById('nav-contact').classList.add('active-nav');
+                document.getElementById('nav-contact')?.classList.add('active-nav');
             }
-
+    
             window.scrollTo(0, 0);
         }
-
+    
         function goHome() {
             showPage('home');
+            // Bersihkan hash di URL
+            history.pushState("", document.title, window.location.pathname + window.location.search);
         }
-
+    
         function toggleMobileMenu() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         }
-
+    
         window.addEventListener('DOMContentLoaded', init);
-
+    
     </script>
 </body>
 </html>
